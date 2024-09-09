@@ -32,7 +32,7 @@ class ValidationHelper
      * @return string normalized phone number: 258(84|85)xxxxxxx
      * @throws Exception
      */
-    public static function normalizeMSISDN($msisdn)
+    public static function normalizeMSISDN($msisdn, $throw_exception=true)
     {
         // $matchGroup array contains 5 pairs:
         // – [0] -> the full match.
@@ -52,7 +52,11 @@ class ValidationHelper
             $normalizedPhoneNumber = "258" . $matchedPhoneNumber;
             return $normalizedPhoneNumber;
         } else {
-            throw new Exception("The provided number " . $msisdn . " is not valid Vodacom MSISDN.");
+            if ($throw_exception) {
+                throw new Exception("The provided number " . $msisdn . " is not valid Vodacom MSISDN.");
+            }
+
+            return false;
         }
     }
 }
